@@ -7,7 +7,6 @@ output: html_document
 
 Loading packages
 ```{r}
-library(dplyr)
 library(tidyverse)
 library(ggplot2)
 library(moderndive)
@@ -51,50 +50,43 @@ plot_temp_hour <-
   theme_minimal(base_size = 12)
 
 plot_temp_hour
+ggsave(filename = "temp_vs_time_humid.png",
+       plot = plot_temp_hour, width = 7, height = 4.5, dpi = 300)
 ```
 
+
 # Problem 2
-### Create data fram
+### Create data frame
 ```{r}
 problem2_df <- tibble(
-  num_var   = rnorm(10),
-  log_var   = num_var > 0,
-  char_var  = letters[1:10],
-  fact_var  = factor(rep(c("low", "med", "high"), length.out = 10))
+  num_var = rnorm(10),
+  log_var = num_var > 0,
+  char_var = letters[1:10],
+  fact_var = factor(rep(c("low", "med", "high"), length.out = 10))
 )
 
 problem2_df
 ```
 
 ### take the mean of each variable
+The first two variable (numeric and logical vecotr) can calculate for numeric 
+mean, the last two cannot because they are not numeric.
 ```{r}
-mean(df %>% pull(num_var))    # works: numeric mean
-mean(df %>% pull(log_var))    # works: TRUE=1, FALSE=0
-mean(df %>% pull(char_var))   # error: not numeric
-mean(df %>% pull(fact_var))   # error: not numeric
+mean(problem2_df %>% pull(num_var))    
+mean(problem2_df %>% pull(log_var))   
+mean(problem2_df %>% pull(char_var))
+mean(problem2_df %>% pull(fact_var)) 
 ```
 
 ### Convert to numeric and retry
+For the logical vector, TRUE is converted to 1 and FALSE is converted to 0.
+For the character vector, they cannot be converted
+For the factor vector, the three categories are converted to 1, 2, 3.
 ```{r}
-as.numeric(df$log_var)   
-as.numeric(df$char_var)    
-as.numeric(df$fact_var) 
+as.numeric(problem2_df$log_var)   
+as.numeric(problem2_df$char_var)    
+as.numeric(problem2_df$fact_var) 
 ```
-
-
-
-
-```{r}
-
-```
-
-
-```{r}
-
-```
-
-
-
 
 
 
