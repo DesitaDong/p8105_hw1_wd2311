@@ -5,26 +5,82 @@ date: "2025-09-21"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+Loading packages
+```{r}
+library(dplyr)
+library(ggplot2)
+library(moderndive)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+# Problem 1
+### Load Data
+Load the early_january_weather dataset from moderndive library
+```{r}
+data("early_january_weather")
 ```
 
-## Including Plots
+### Quick description
+This dataset has 358 rows and 15 columns.  
+The variables include: origin, year, month, day, hour, temp, dewp, humid, 
+wind_dir, wind_speed, wind_gust, precip, pressure, visib, time_hour  
+The mean temperature is about 39.58212.
+```{r}
+weather <- early_january_weather
+names(weather)
+nrow(weather)
+ncol(weather)
+mean(weather$temp, na.rm = TRUE)
+```
+### Scatterplot
+Temperature generally increase from beginning to the middle of the month, with 
+demonstrating a daily pattern of dipping overnight and rising during daytime 
+hours. Points with higher humidity tend to cluster around Jan 12 to Jan 13, with
+lower daily temperature variation. 
+```{r}
+plot_temp_hour <-
+  ggplot(weather, aes(x = time_hour, y = temp, color = humid)) +
+  scale_color_continuous(name = "Humidity (%)") +
+  geom_point(alpha = 0.7, size = 1.8) +
+  labs(
+    x = "Time (hour)",
+    y = "Temperature (°F)",
+    title = "Early January Weather"
+  ) +
+  theme_minimal(base_size = 12)
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+plot_temp_hour
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+
+
+
+
+
