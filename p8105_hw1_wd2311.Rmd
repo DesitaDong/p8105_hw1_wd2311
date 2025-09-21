@@ -1,13 +1,14 @@
 ---
 title: "p8105_hw1_wd2311"
 author: "wd2311"
-date: "2025-09-21"
+date: "2025-09-20"
 output: html_document
 ---
 
 Loading packages
 ```{r}
 library(dplyr)
+library(tidyverse)
 library(ggplot2)
 library(moderndive)
 ```
@@ -33,10 +34,10 @@ ncol(weather)
 mean(weather$temp, na.rm = TRUE)
 ```
 ### Scatterplot
-Temperature generally increase from beginning to the middle of the month, with 
-demonstrating a daily pattern of dipping overnight and rising during daytime 
-hours. Points with higher humidity tend to cluster around Jan 12 to Jan 13, with
-lower daily temperature variation. 
+Temperature generally increase from beginning to the middle of the month, except 
+for a sudden drop at Jan 15. Also there is a daily pattern of dipping overnight 
+and rising during daytime hours. Points with higher humidity tend to cluster 
+around Jan 11 to Jan 14, with lower daily temperature variation. 
 ```{r}
 plot_temp_hour <-
   ggplot(weather, aes(x = time_hour, y = temp, color = humid)) +
@@ -52,18 +53,32 @@ plot_temp_hour <-
 plot_temp_hour
 ```
 
-
+# Problem 2
+### Create data fram
 ```{r}
+problem2_df <- tibble(
+  num_var   = rnorm(10),
+  log_var   = num_var > 0,
+  char_var  = letters[1:10],
+  fact_var  = factor(rep(c("low", "med", "high"), length.out = 10))
+)
 
+problem2_df
 ```
 
+### take the mean of each variable
 ```{r}
-
+mean(df %>% pull(num_var))    # works: numeric mean
+mean(df %>% pull(log_var))    # works: TRUE=1, FALSE=0
+mean(df %>% pull(char_var))   # error: not numeric
+mean(df %>% pull(fact_var))   # error: not numeric
 ```
 
-
+### Convert to numeric and retry
 ```{r}
-
+as.numeric(df$log_var)   
+as.numeric(df$char_var)    
+as.numeric(df$fact_var) 
 ```
 
 
